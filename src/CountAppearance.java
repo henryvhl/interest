@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class CountAppearance {
     
+    private static final int MAX_PEOPLE = 20;
+    
     public static final Comparator<Participant> COMPARE_BY_RECORDS = new Comparator<Participant>() {
         @Override
         public int compare(Participant p1, Participant p2) {
@@ -21,7 +23,13 @@ public class CountAppearance {
     };
     
     public static void main(String[] args) throws IOException {
-        List<ChatRecord> records = readRecord("20161129.txt");
+        generateReport("20161128.txt");
+        generateReport("20161129.txt");
+        generateReport("20161201.txt");
+    }
+    
+    public static void generateReport(String fileName) throws IOException {
+        List<ChatRecord> records = readRecord(fileName);
         System.out.println("Total records: " + records.size());
         System.out.println();
 //        for (ChatRecord record : records) {
@@ -33,19 +41,19 @@ public class CountAppearance {
         System.out.println("Total participants: " + people.size());
         Collections.sort(people, COMPARE_BY_RECORDS.reversed());
         System.out.println();
-        for (Participant person : people) {
-            System.out.println(person);
+        for (int i = 0; i < MAX_PEOPLE; i++) {
+            System.out.println(people.get(i));
         }
         System.out.println("\nThe most active participant: " + people.get(0).getName());
         people.get(0).printRecords();
         System.out.println();
         
-        String[] topics = {"\u4f5c\u4e1a", "\u62db\u8058", "project", 
-                "\u8bfe\u7a0b", "简历", "面试", "老师", "java", "666", "+1"}; 
-        
-        for (int i = 0; i < topics.length; i++) {
-            printTopic(records, i+1, topics[i], topics[i] == "1");
-        }
+//        String[] topics = {"\u4f5c\u4e1a", "\u62db\u8058", "project", 
+//                "\u8bfe\u7a0b", "简历", "面试", "老师", "java", "666", "+1"}; 
+//        
+//        for (int i = 0; i < topics.length; i++) {
+//            printTopic(records, i+1, topics[i], topics[i] == "1");
+//        }
 //        System.out.println(String.format("\\u%04x\\u%04x", (int)'课', (int)'次'));
     }
     
