@@ -1,5 +1,6 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 
 public class ChatRecord {
@@ -7,9 +8,11 @@ public class ChatRecord {
     private LocalTime time;
     private StringBuffer dialogs;
     
-    public ChatRecord(String name, String timeAsString, DateTimeFormatter formatter) {
+    public ChatRecord(String name, String timeAsString, DateTimeFormatter formatter) throws DateTimeParseException {
         this.name = name;
-        if (formatter != null) {
+        if (timeAsString == null || timeAsString.isEmpty()) {
+            this.time = null;
+        } else if (formatter != null) {
             this.time = LocalTime.parse(timeAsString, formatter);
         } else {
             this.time = LocalTime.parse(timeAsString);

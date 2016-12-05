@@ -26,6 +26,8 @@ public class CountAppearance {
         generateReport("20161128.txt");
         generateReport("20161129.txt");
         generateReport("20161201.txt");
+        generateReport("20161203.txt");
+        generateReport("20161204.txt");
     }
     
     public static void generateReport(String fileName) throws IOException {
@@ -71,9 +73,12 @@ public class CountAppearance {
         String line = reader.readLine();
         while (line != null) {
             int index_to = line.indexOf(" to");
-            int index_leftP = line.indexOf('(');
+            int index_leftP = line.lastIndexOf('(');
             String name = line.substring(prefix.length(), index_to);
             String timeAsString = line.substring(index_leftP + 1, line.length() - suffix.length());
+            if (timeAsString.startsWith("null")) {
+                timeAsString = null;
+            }
             try {
                 ChatRecord record = new ChatRecord(name, timeAsString, formatter);
                 records.add(record);
